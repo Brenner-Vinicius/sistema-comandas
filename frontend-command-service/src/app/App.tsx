@@ -1,3 +1,5 @@
+import "../styles/index.css";
+import "../styles/tailwind.css";
 import { RouterProvider } from "react-router";
 import { router } from "./routes";
 

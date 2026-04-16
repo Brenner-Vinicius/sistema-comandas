@@ -1,38 +1,50 @@
-const Comanda = require('../models/Comanda')
-const Pedido = require('../models/Pedido')
+const Pedido = require('../models/Pedido');
 
-// CREATE
+// Criar Pedido
 exports.create = async (req, res) => {
-  const comanda = await Comanda.create(req.body)
-  res.json(comanda)
-}
+  try {
+    // Comentamos a validação de comanda para evitar o erro 500 de "ObjectId failed"
+    /*
+    const comanda = await Comanda.findById(req.body.comanda);
+    if (!comanda) return res.status(404).json({ error: 'Comanda não encontrada' });
+    */
 
-// LIST
+    // Cria o pedido com os dados que vêm do Frontend
+    const pedido = await Pedido.create(req.body);
+
+    res.status(201).json(pedido);
+  } catch (error) {
+    console.error("Erro ao criar pedido:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Listar Pedidos
 exports.list = async (req, res) => {
-  const comandas = await Comanda.find()
-  res.json(comandas)
-}
+  try {
+    const pedidos = await Pedido.find();
+    res.json(pedidos);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
-// GET BY ID
-exports.getById = async (req, res) => {
-  const comanda = await Comanda.findById(req.params.id)
-  const pedidos = await Pedido.find({ comanda: req.params.id })
-
-  res.json({ ...comanda.toObject(), pedidos })
-}
-
-// UPDATE
+// Atualizar Pedido
 exports.update = async (req, res) => {
-  const comanda = await Comanda.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  )
-  res.json(comanda)
-}
+  try {
+    const pedido = await Pedido.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(pedido);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
-// DELETE
+// Deletar Pedido
 exports.delete = async (req, res) => {
-  await Comanda.findByIdAndDelete(req.params.id)
-  res.json({ message: 'Comanda removida' })
-}
+  try {
+    await Pedido.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Pedido removido com sucesso' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

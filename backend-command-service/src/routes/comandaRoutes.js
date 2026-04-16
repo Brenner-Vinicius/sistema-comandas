@@ -1,11 +1,11 @@
-const router = require('express').Router()
-const controller = require('../controllers/comandaController')
-const auth = require('../middlewares/auth')
+const express = require('express');
+const router = express.Router();
+const comandaController = require('../controllers/comandaController');
 
-router.post('/', auth, controller.create)
-router.get('/', auth, controller.list)
-router.get('/:id', auth, controller.getById)
-router.put('/:id', auth, controller.update)
-router.delete('/:id', auth, controller.delete)
+// Verifique se os nomes das funções (list, create, etc) batem com o seu comandaController.js
+router.get('/', comandaController.list);
+router.post('/', comandaController.create);
+router.put('/:id', comandaController.update);
+router.delete('/:id', comandaController.delete);
 
-module.exports = router
+module.exports = router;

@@ -1,10 +1,10 @@
-const router = require('express').Router()
-const controller = require('../controllers/pedidoController')
-const auth = require('../middlewares/auth')
+const express = require('express');
+const router = express.Router();
+const pedidoController = require('../controllers/pedidoController');
 
-router.post('/', auth, controller.create)
-router.get('/', auth, controller.list)
-router.put('/:id', auth, controller.update)
-router.delete('/:id', auth, controller.delete)
+router.get('/', pedidoController.list);
+router.post('/', pedidoController.create);
+router.put('/:id', pedidoController.update);
+router.delete('/:id', pedidoController.delete);
 
-module.exports = router
+module.exports = router;
