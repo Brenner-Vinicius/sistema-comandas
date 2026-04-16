@@ -1,16 +1,24 @@
-const jwt = require('jsonwebtoken')
-const SECRET = 'segredo'
+const jwt = require('jsonwebtoken');
+const SECRET = 'segredo'; 
 
 module.exports = (req, res, next) => {
-  const token = req.headers.authorization
+  const authHeader = req.headers.authorization;
 
-  if (!token) return res.status(401).json({ error: 'Sem token' })
+  if (!authHeader) return res.status(401).json({ error: 'Sem token' });
+
+  const parts = authHeader.split(' ');
+
+  if (parts.length !== 2) return res.status(401).json({ error: 'Erro no token' });
+
+  const [scheme, token] = parts;
+
+  if (!/^Bearer$/i.test(scheme)) return res.status(401).json({ error: 'Token mal formatado' });
 
   try {
-    const decoded = jwt.verify(token, SECRET)
-    req.user = decoded
-    next()
-  } catch {
-    res.status(401).json({ error: 'Token inválido' })
+    const decoded = jwt.verify(token, SECRET);
+    req.user = decoded;
+    return next();
+  } catch (err) {
+    return res.status(401).json({ error: 'Token inválido' });
   }
-}
+};
