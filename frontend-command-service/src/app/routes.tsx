@@ -1,4 +1,6 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { Root } from "./components/Root";
 import { Orders } from "./components/Orders";
 import { Inventory } from "./components/Inventory";
@@ -14,7 +16,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: (
+    Component: () => (
       <ProtectedRoute>
         <Root />
       </ProtectedRoute>
@@ -27,10 +29,19 @@ export const router = createBrowserRouter([
   },
   {
     path: "/chat/:orderId",
-    element: (
+    Component: () => (
       <ProtectedRoute>
         <Chat />
       </ProtectedRoute>
     ),
   },
 ]);
+
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  );
+}

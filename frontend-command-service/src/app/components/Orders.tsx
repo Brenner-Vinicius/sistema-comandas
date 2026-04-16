@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+
+import React, { useState, useEffect } from "react"; // Adicione o React aqui
+import { useNavigate } from "react-router-dom";
 import { Clock, CheckCircle, XCircle, ChevronDown, ChevronUp, MessageCircle, Plus, Edit } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";

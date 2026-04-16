@@ -1,4 +1,5 @@
-import { Outlet, NavLink } from "react-router";
+import React from "react";
+import { Outlet, NavLink } from "react-router-dom";
 import { ShoppingBag, Package, Settings } from "lucide-react";
 
 export function Root() {
